@@ -14,9 +14,9 @@
     <author>Parvez Saleh</author>
     <email>support@vedaconsulting.co.uk</email>
   </maintainer>
-  <releaseDate></releaseDate>
-  <version>1.7.3-yfc-dev</version>
-  <develStage>dev</develStage>
+  <releaseDate>2019-03-15</releaseDate>
+  <version>1.7.3-yfc-1</version>
+  <develStage>test</develStage>
   <compatibility>
     <ver>4.2</ver>
     <ver>4.3</ver>
