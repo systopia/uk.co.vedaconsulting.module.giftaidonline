@@ -252,7 +252,7 @@ SQL;
 
   function IsPostcode($postcode)
   {
-      $postcode = strtoupper(str_replace(' ','',$postcode));
+      $postcode = strtoupper(preg_replace('/\t+/', '',str_replace(' ','',$postcode)));
       if(preg_match("/^[A-Z]{1,2}[0-9]{2,3}[A-Z]{2}$/",$postcode) || preg_match("/^[A-Z]{1,2}[0-9]{1}[A-Z]{1}[0-9]{1}[A-Z]{2}$/",$postcode) || preg_match("/^GIR0[A-Z]{2}$/",$postcode))
       {
           return true;
