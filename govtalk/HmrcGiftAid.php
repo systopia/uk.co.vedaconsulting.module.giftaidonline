@@ -189,6 +189,15 @@ EOD;
     $aAddress['address']  = null;
     $aAddress['postcode'] = null;
 
+    
+    // UPDATED 29/11/2018 - Rich Smith adjusted the SQL below so that the most
+    // recent Gift Aid Declaration is used: 
+    // ORDER BY start_date ASC >>> changed to >>> ORDER BY start_date DESC
+    // and also to take into account GADs which make use of the '4 years previous'
+    // option : added 'OR eligible_for_gift_aid = 3'
+    // and also to take into account the end date of the GAD, if there is a
+    // date set
+    
     $bGetAddressFromDeclaration = stristr( $sSource, 'CONTRIBUTION' ) ? false : true;
     if ( $bGetAddressFromDeclaration ) {
       $sSql =<<<SQL
@@ -198,8 +207,9 @@ EOD;
               FROM     civicrm_value_gift_aid_declaration
               WHERE    entity_id  =  %1
               AND      start_date <= %2
-              AND      eligible_for_gift_aid = 1
-              ORDER BY start_date ASC
+              AND      (end_date IS NULL OR end_date = '' OR end_date > %2)
+              AND      (eligible_for_gift_aid = 1 OR eligible_for_gift_aid = 3) 
+              ORDER BY start_date DESC
               LIMIT  1
 SQL;
       $aParams = array( 1 => array( $p_contact_id               , 'Integer' )
